@@ -3,10 +3,9 @@ from typing import List  # noqa: F401
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 
 mod = "mod4"
-terminal = guess_terminal()
+terminal = 'st'
 
 keys = [
     # Switch between windows
@@ -54,6 +53,9 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
+
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +10%"), desc="Increase Brightnes"),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 10%-"), desc="Decrease Brightnes"),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -135,7 +137,10 @@ screens = [
                     linewidth = 1,
                     padding = 5,
                 ),
-                widget.QuickExit(),
+                widget.QuickExit(
+                    countdown_format="{}",
+                    default_text=""
+                ),
             ],
             24,
         ),

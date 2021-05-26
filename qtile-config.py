@@ -268,6 +268,27 @@ def init_widgets_list():
         ),
         widget.TextBox(
             text = '',
+            background = colors[5],
+            foreground = colors[4],
+            padding = 0,
+            fontsize = 37
+        ),
+        widget.TextBox(
+            text = "  ",
+            foreground = colors[2],
+            background = colors[4],
+            padding = 0
+        ),
+        widget.Battery(
+            foreground = colors[2],
+            background = colors[4],
+            notify_below=15,
+            charge_char="",
+            discharge_char="",
+            format='{percent:2.0%} {char}',
+        ),
+        widget.TextBox(
+            text = '',
             background = colors[4],
             foreground = colors[5],
             padding = 0,

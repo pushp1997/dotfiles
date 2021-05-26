@@ -182,7 +182,7 @@ def init_widgets_list():
         widget.TextBox(
             text = '',
             background = colors[0],
-            foreground = colors[4],
+            foreground = colors[5],
             padding = 0,
             fontsize = 37
         ),
@@ -190,23 +190,16 @@ def init_widgets_list():
             interface = "wlp59s0",
             format = '{down} ↓↑ {up}',
             foreground = colors[2],
-            background = colors[4],
+            background = colors[5],
             padding = 5
         ),
         widget.TextBox(
             text = '',
-            background = colors[4],
-            foreground = colors[5],
+            background = colors[5],
+            foreground = colors[4],
             padding = 0,
             fontsize = 37
         ),
-        # widget.TextBox(
-        #     text = " ⟳",
-        #     padding = 2,
-        #     foreground = colors[2],
-        #     background = colors[5],
-        #     fontsize = 14
-        # ),
         widget.CheckUpdates(
             update_interval = 1800,
             distro = "Arch_checkupdates",
@@ -214,19 +207,37 @@ def init_widgets_list():
             no_update_string = " Updated ",
             foreground = colors[2],
             mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e sudo pacman -Syu')},
-            background = colors[5]
+            background = colors[4]
         ),
         widget.TextBox(
             text='',
-            background = colors[5],
-            foreground = colors[4],
+            background = colors[4],
+            foreground = colors[5],
             padding = 0,
             fontsize = 37
         ),
         widget.Memory(
             foreground = colors[2],
-            background = colors[4],
+            background = colors[5],
             mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e htop')},
+            padding = 5
+        ),
+        widget.TextBox(
+            text = '',
+            background = colors[5],
+            foreground = colors[4],
+            padding = 0,
+            fontsize = 37
+        ),
+        widget.TextBox(
+            text = " ",
+            foreground = colors[2],
+            background = colors[4],
+            padding = 0
+        ),
+        widget.Volume(
+            foreground = colors[2],
+            background = colors[4],
             padding = 5
         ),
         widget.TextBox(
@@ -236,34 +247,16 @@ def init_widgets_list():
             padding = 0,
             fontsize = 37
         ),
-        widget.TextBox(
-            text = " ",
-            foreground = colors[2],
-            background = colors[5],
-            padding = 0
-        ),
-        widget.Volume(
-            foreground = colors[2],
-            background = colors[5],
-            padding = 5
-        ),
-        widget.TextBox(
-            text = '',
-            background = colors[5],
-            foreground = colors[4],
-            padding = 0,
-            fontsize = 37
-        ),
         widget.CurrentLayoutIcon(
             custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-            foreground = colors[0],
-            background = colors[4],
+            foreground = colors[2],
+            background = colors[5],
             padding = 0,
             scale = 0.7
         ),
         widget.CurrentLayout(
             foreground = colors[2],
-            background = colors[4],
+            background = colors[5],
             padding = 5
         ),
         widget.TextBox(

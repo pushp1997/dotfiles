@@ -3,6 +3,7 @@ This repository contains config files for my Qtile rice
 
 # Install the Rice with all the dependencies
 ```bash
+sudo pacman -S git
 chmod +x apply.sh
 ./apply.sh
 ```

@@ -9,7 +9,7 @@ rm -rf yay
 yay -Syyu
 
 printf "Installing dependencies\n"
-yay -S xorg xorg-xinit qtile feh flameshot udiskie ntfs-3g ttf-font-awesome ttc-iosevka picom htop harfbuzz ttf-hack ttf-joypixels brightnessctl network-manager-applet ttf-ubuntu-font-family
+yay -S xorg xorg-xinit qtile feh scrot udiskie ntfs-3g ttf-font-awesome ttc-iosevka picom htop harfbuzz ttf-hack-nerd ttf-joypixels brightnessctl network-manager-applet ttf-ubuntu-font-family
 # yay -S google-chrome-stable ranger visual-studio-code-bin gnome-keyring vlc ntp kdenlive zoom zsh neofetch docker bookworm  # Nice-to-haves
 printf "Installing distrotube-st"
 git clone https://gitlab.com/dwt1/st-distrotube.git

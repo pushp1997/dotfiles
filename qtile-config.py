@@ -57,11 +57,15 @@ keys = [
     Key([mod], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
 
+    # Keyboard quick settings keys
     Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +10%"), desc="Increase Brightnes"),
     Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 10%-"), desc="Decrease Brightnes"),
     Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle"), desc="Mute"),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute"), desc="Decrease Volume"),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"), desc="Increase Volume")
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"), desc="Increase Volume"),
+
+    # Take screenshot
+    Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg")),
 ]
 
 group_names = [("WEB", {'layout': 'monadtall'}),

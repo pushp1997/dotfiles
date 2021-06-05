@@ -173,10 +173,6 @@ def init_widgets_list():
             background = colors[0],
             padding = 0
         ),
-        widget.Systray(
-            background = colors[0],
-            padding = 5
-        ),
         widget.Sep(
             linewidth = 0,
             padding = 6,
@@ -295,6 +291,18 @@ def init_widgets_list():
             foreground = colors[2],
             background = colors[5],
             format = "%a, %B %d - %H:%M "
+        ),
+        widget.TextBox(
+            text = '',
+            background = colors[5],
+            foreground = colors[4],
+            padding = 0,
+            fontsize = 37
+        ),
+        widget.Systray(
+            foreground = colors[2],
+            background = colors[4],
+            padding = 5
         ),
     ]
     return widgets_list

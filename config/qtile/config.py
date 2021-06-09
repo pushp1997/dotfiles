@@ -304,6 +304,11 @@ def init_widgets_list():
             background = colors[4],
             padding = 5
         ),
+        widget.TextBox(
+            text = " ",
+            foreground = colors[2],
+            background = colors[4],
+        ),
     ]
     return widgets_list
 

@@ -1,9 +1,8 @@
-# qtile-rice
-This repository contains config files for my Qtile rice
+# Dot Files
+This repository contains config files for various programs that I use.
 
 # Install the Rice with all the dependencies
 ```bash
-sudo pacman -S git
 chmod +x apply.sh
 ./apply.sh
 ```

@@ -24,6 +24,7 @@ sudo chown root:root ~/.xinitrc
 sudo cp -R config/qtile ~/.config/
 chmod +x ~/.config/qtile/autostart.sh
 sudo cp -R config/dunst ~/.config/
+sudo cat synaptics.conf >> /usr/share/X11/xorg.conf.d/70-synaptics.conf
 
 # Uncomment if installed ntp in nice to haves
 # ntpd -u ntp:ntp
@@ -35,3 +36,5 @@ sudo cp -R config/dunst ~/.config/
 # sudo groupadd docker
 # sudo gpasswd -a $USER docker
 # newgrp docker
+
+printf "Rice Applied!\nYou can now run startx"

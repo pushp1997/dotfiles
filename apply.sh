@@ -26,6 +26,10 @@ chmod +x ~/.config/qtile/autostart.sh
 sudo cp -R config/dunst ~/.config/
 sudo cat synaptics.conf >> /usr/share/X11/xorg.conf.d/70-synaptics.conf
 
+# Uncomment for i3wm
+# sudo cp config/i3/config ~/.config/i3/config && sudo chown pushp:users ~/.config/i3/config
+# sudo cp config/i3status/i3status.conf ~/.config/i3status/i3status.conf && sudo chown pushp:users ~/.config/i3status/i3status.conf
+
 # Uncomment if installed ntp in nice to haves
 # ntpd -u ntp:ntp
 # sudo systemctl enable ntpd

@@ -2,12 +2,144 @@ from typing import List  # noqa: F401
 import os
 import subprocess
 
-from libqtile import bar, layout, widget, hook, qtile
+from libqtile import bar, layout, widget, hook, qtile, popup, configurable
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
 mod = "mod4"
-terminal = 'st'
+terminal = 'alacritty'
+
+
+class KbdOverview(configurable.Configurable):
+    defaults = [
+        ('x', None, 'x position. Defaults to centering on screen.'),
+        ('y', None, 'y position. Defaults to centering on screen.'),
+        ('width', None, 'Width in pixels. Defaults to 75% screen width.'),
+        ('height', None, 'Height in pixels. Defaults to 75% screen height.'),
+        ('foreground', '#ffffff', 'Text colour.',),
+        ('background', '#111111', 'Background colour.',),
+        ('border', '#111111', 'Border colours. Or None for none.',),
+        ('border_width', 4, 'Line width of borders.'),
+        ('opacity', 0.8, 'Window opacity. Requires compositor.'),
+        ('corner_radius', None, 'Corner radius for round corners, or None.'),
+        ('font', 'Source Code Pro', 'Font.'),
+        ('font_size', 14, 'Size of font.'),
+        ('font_shadow', None, 'Color for text shadows, or None for no shadows.'),
+    ]
+
+    keys_ignored = (
+        "XF86AudioMute",
+        "XF86AudioLowerVolume",
+        "XF86AudioRaiseVolume",
+        "XF86AudioPlay",
+        "XF86AudioNext",
+        "XF86AudioPrev",
+        "XF86AudioStop",
+        "XF86MonBrightnessUp",
+        "XF86MonBrightnessDown"
+    )
+
+    text_replaced = {
+        "mod4": "Super",
+        "control": "Ctrl",
+        "mod1": "Alt",
+        "shift": "Shift",
+        "twosuperior": "²",
+        "less": "<",
+        "ampersand": "&",
+        "Escape": "Esc",
+        "Return": "Enter",
+    }
+
+    def __init__(self, **config):
+        configurable.Configurable.__init__(self, **config)
+        self.add_defaults(KbdOverview.defaults)
+        self._window = None
+        self._shown = False
+        hook.subscribe.startup_complete(self.configure)
+
+    def configure(self):
+        # if self.border_width:
+        #     self.border =  #qtile.color_pixel(self.border)  # this will need updating
+        if self.width is None:
+            self.width = int(qtile.screens[0].width * 6/8)
+        if self.height is None:
+            self.height = int(qtile.screens[0].height * 6/8)
+        if self.x is None:
+            self.x = int(qtile.current_screen.width * 1/8)
+        if self.y is None:
+            self.y = int(qtile.current_screen.height * 1/8)
+
+        popup_config = {}
+        for opt in popup.Popup.defaults:
+            key = opt[0]
+            if hasattr(self, key):
+                popup_config[key] = getattr(self, key)
+
+        self._window = popup.Popup(
+            qtile, **popup_config, x=self.x, y=self.y, width=self.width, height=self.height
+        )
+        self._window.win.handle_ButtonPress = self._button_press
+        self._window.clear()
+
+        # title
+        self._window.layout.font_size = 24
+        self._window.text = 'Keyboard Shortcuts'        
+        self._window.draw_text(y=28, x=(self._window.width / 2) - (self._window.layout.width / 2))
+        self._window.drawer.draw_hbar(
+            self.foreground + '.5', self.width * 1/8, self.width * 7/8, 76
+        )
+
+        # binding information should go here
+        self._window.layout.font_size = self.font_size
+        template = " \t\t\t {0:30}| \t {1:50}" # column widths: 30, 50
+        i=0
+        for key in keys:
+            if key.key not in self.keys_ignored:
+                modifiers = ""
+                bindings = ""
+                description = key.desc.title()
+
+                for m in key.modifiers:
+                    if m in self.text_replaced.keys():
+                        modifiers += self.text_replaced[m] + " + "
+                    else:
+                        modifiers += m.capitalize() + " + "
+
+                if len(key.key) > 1:
+                    if key.key in self.text_replaced.keys():
+                        bindings = self.text_replaced[key.key]
+                    else:
+                        bindings = key.key.title()
+                else:
+                    bindings = key.key
+
+                self._window.text = template.format(modifiers+bindings, description)
+                y = 80 + i * self._window.layout.height
+                self._window.draw_text(y=y)
+                i += 1
+
+    def _button_press(self, event):
+        if event.detail == 1:
+            self.hide()
+
+    def toggle(self, *args, **kwargs):
+        if self._shown:
+            self.hide()
+        else:
+            self.show()
+
+    def hide(self):
+        self._window.hide()
+        self._shown = False
+
+    def show(self, qtile=None):
+        self._window.unhide()
+        self._window.draw()
+        self._shown = True
+
+kbdoverview = KbdOverview()
+
 
 keys = [
     # Switch between windows
@@ -64,8 +196,11 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute"), desc="Decrease Volume"),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"), desc="Increase Volume"),
 
+    # Display Keybindings in a popup reference: https://github.com/qtile/qtile/issues/1329#issuecomment-742868703 https://github.com/qtile/qtile/blob/master/libqtile/popup.py
+    Key([mod], "k", lazy.function(kbdoverview.toggle), desc="Display keybindings in a popup"),    
+
     # Take screenshot
-    Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg")),
+    Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg"), desc="Take a screenshot"),
 ]
 
 group_names = [("WEB", {'layout': 'monadtall'}),
@@ -81,8 +216,8 @@ group_names = [("WEB", {'layout': 'monadtall'}),
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
-    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
+    keys.append(Key([mod], str(i), lazy.group[name].toscreen(), desc="Switch to Workspace {}".format(i)))        # Switch to another group
+    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name), desc="Move focused window to Workspace {}".format(i))) # Send current window to another group
 
 
 layout_theme = {
@@ -95,6 +230,7 @@ layout_theme = {
 layouts = [
     layout.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
+    layout.Floating(**layout_theme),
     # layout.Columns(border_focus_stack='#d75f5f'),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),

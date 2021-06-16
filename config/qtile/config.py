@@ -196,8 +196,11 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute"), desc="Decrease Volume"),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"), desc="Increase Volume"),
 
+    # Lockscreen
+    Key([mod], "l", lazy.spawn("betterlockscreen -l dimblur"), desc="Lock screen, to update the image run 'betterlockscreen -u ~/path/to/picture'"),
+
     # Display Keybindings in a popup reference: https://github.com/qtile/qtile/issues/1329#issuecomment-742868703 https://github.com/qtile/qtile/blob/master/libqtile/popup.py
-    Key([mod], "k", lazy.function(kbdoverview.toggle), desc="Display keybindings in a popup"),    
+    Key([mod], "k", lazy.function(kbdoverview.toggle), desc="Display keybindings in a popup"),
 
     # Take screenshot
     Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg"), desc="Take a screenshot"),

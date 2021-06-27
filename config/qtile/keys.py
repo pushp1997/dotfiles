@@ -199,11 +199,14 @@ keys = [
     # Key([mod], "t", lazy.spawn("synclient TouchpadOff=$((`synclient -l | grep TouchpadOff | awk '{print $3}'`==0))"), desc="Toggle Touchpad On/Off"),
 
     # Launch Rofi
-    Key([mod], "r", lazy.spawn('rofi -modi "drun,window" -scroll-method 1  -show-icons -show drun'), desc="Launch Rofi"),
+    Key([mod], "r", lazy.spawn('rofi -modi "drun,window" -terminal alacritty -scroll-method 1  -show-icons -display-drun \"App" -show drun'), desc="Launch Rofi"),
 
     # Display Keybindings in a popup reference: https://github.com/qtile/qtile/issues/1329#issuecomment-742868703 https://github.com/qtile/qtile/blob/master/libqtile/popup.py
     Key([mod], "k", lazy.function(kbdoverview.toggle), desc="Display keybindings in a popup"),
 
     # Take screenshot
     Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg"), desc="Take a screenshot"),
+
+    # Rofi Power menu
+    Key([mod], "Escape", lazy.spawn('bash -c "~/.config/rofi/scripts/rofi-power"'), desc="Power Menu on Rofi"),
 ]

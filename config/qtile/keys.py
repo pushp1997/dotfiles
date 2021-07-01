@@ -201,12 +201,15 @@ keys = [
     # Launch Rofi
     Key([mod], "r", lazy.spawn('rofi -modi "drun,window" -terminal alacritty -scroll-method 1  -show-icons -display-drun \"Launch" -show drun'), desc="Launch Rofi"),
 
-    # Display Keybindings in a popup reference: https://github.com/qtile/qtile/issues/1329#issuecomment-742868703 https://github.com/qtile/qtile/blob/master/libqtile/popup.py
+    # # Display Keybindings in a popup reference: https://github.com/qtile/qtile/issues/1329#issuecomment-742868703 https://github.com/qtile/qtile/blob/master/libqtile/popup.py
     Key([mod], "k", lazy.function(kbdoverview.toggle), desc="Display keybindings in a popup"),
 
     # Take screenshot
     Key([], "Print", lazy.spawn("scrot /home/pushp/Pictures/Screenshot-%Y-%m-%d-%H_%M_%S.jpg"), desc="Take a screenshot"),
 
-    # Rofi Power menu
-    Key([mod], "Escape", lazy.spawn('bash -c "~/.config/rofi/scripts/rofi-power"'), desc="Power Menu on Rofi"),
+    # [Rofi] Power menu
+    Key([mod], "Escape", lazy.spawn('bash -c "~/.config/rofi/scripts/rofi-power"'), desc="[Rofi] Power menu"),
+
+    # [Rofi] Switching Windows
+    Key(["mod1"], "Tab", lazy.spawn('bash -c "~/.config/rofi/scripts/window-switcher"'), desc="[Rofi] Switching Windows"),
 ]

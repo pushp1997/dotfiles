@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# A rofi powered menu to switch between open windows [Alt + Tab functionality]
+# Uses: rofi
+
 rofi \
     -show window  \
     -kb-cancel "Alt+Escape,Escape" \

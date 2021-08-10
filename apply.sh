@@ -9,8 +9,8 @@ rm -rf yay
 yay -Syyu
 
 printf "Installing dependencies\n"
-yay -S xorg xorg-xinit python-setuptools qtile alacritty feh scrot betterlockscreen udiskie ntfs-3g ttf-font-awesome ttc-iosevka picom htop harfbuzz ttf-hack-nerd ttf-joypixels brightnessctl network-manager-applet ttf-ubuntu-font-family dunst
-# yay -S google-chrome-stable ranger visual-studio-code-bin gnome-keyring vlc ntp kdenlive zoom zsh neofetch docker bookworm  # Nice-to-haves
+yay -S xorg xorg-xinit alsa-firmware alsa-utils alsa-plugins pulseaudio-alsa pulseaudio pulseaudio-bluetooth pavucontrol python-psutils python-setuptools qtile rofi alacritty feh scrot betterlockscreen udiskie ntfs-3g ttf-font-awesome ttc-iosevka picom htop harfbuzz ttf-hack-nerd ttf-joypixels brightnessctl network-manager-applet ttf-ubuntu-font-family dunst lightdm lightdm-gtk-greeter
+# yay -S firefox ranger neovim visual-studio-code-bin gnome-keyring vlc ntp zoom zsh neofetch docker bookworm  # Nice-to-haves
 
 printf "Applying rice\n"
 mkdir -p ~/.config
@@ -18,7 +18,7 @@ sudo cp xinitrc ~/.xinitrc
 sudo chmod 644 ~/.xinitrc
 sudo chown root:root ~/.xinitrc
 sudo cp -R config/qtile ~/.config/
-chmod +x ~/.config/qtile/autostart.sh
+sudo chmod +x ~/.config/qtile/autostart.sh
 sudo cp -R config/dunst ~/.config/
 sudo cat synaptics.conf >> /usr/share/X11/xorg.conf.d/70-synaptics.conf
 
@@ -36,5 +36,9 @@ sudo cat synaptics.conf >> /usr/share/X11/xorg.conf.d/70-synaptics.conf
 # sudo groupadd docker
 # sudo gpasswd -a $USER docker
 # newgrp docker
+
+# Uncommentto install virtualbox
+# printf "Installing Vbox"
+# yay -S virtualbox virtualbox-ext-oracle
 
 printf "Rice Applied!\nYou can now run startx"
